@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 
+""" this file belongs into .git/hooks """
+""" use
+ln res/post-update .git/hooks/post-update
+"""
 import os
 import glob
 import json
