@@ -1,22 +1,20 @@
 #!/usr/bin/env python
 
-""" this file belongs into .git/hooks """
-""" use
-ln res/post-update .git/hooks/post-update
-"""
+""" Auto executed on remote push """
+
 import os
 import glob
 import json
 
-root     = "../"
-site     = f"{root}site/"
-header   = f"{root}res/header.html"
-footer   = f"{root}res/footer.html"
-links    = f"{root}res/links.json"
-redirect = f"{root}res/redirect.html"
-source   = f"{root}source/"
-css      = f"{root}source/css"
-images   = f"{root}source/img"
+ROOT     = "../"
+site     = f"{ROOT}site/"
+header   = f"{ROOT}res/header.html"
+footer   = f"{ROOT}res/footer.html"
+links    = f"{ROOT}res/links.json"
+redirect = f"{ROOT}res/redirect.html"
+source   = f"{ROOT}source/"
+css      = f"{ROOT}source/css"
+images   = f"{ROOT}source/img"
 
 title = "DIGEST Storage Research"
 shorttitle = "DIGEST"
@@ -385,5 +383,8 @@ for item in items:
 shortlinks()
 
 # move all files into the site
-os.system(f'cp -r {site}/* {root}')
+os.system(f'cp -r {site}/* {ROOT}')
 os.system(f'rm -rf {site}')
+
+# update this script
+os.system('ln {ROOT}res/post-update {ROOT}.git/hooks/post-update')
