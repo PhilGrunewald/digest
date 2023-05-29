@@ -194,7 +194,8 @@ def reorderFiles(srcItems):
                         dest = f'{target}/{file}'.split('\n')[0]
                         dest = dest.replace('.md','.html')
                     # add 1s per line to mod time to move up rank
-                    os.system(f"touch -r {dest} -A {i:02} {dest}")
+                    # XXX not WORKING on UBUBTU: -A flag
+                    ### os.system(f"touch -r {dest} -A {i:02} {dest}")
 
 
 def getHead(item):
