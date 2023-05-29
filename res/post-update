@@ -4,14 +4,15 @@ import os
 import glob
 import json
 
-root = "../site/"
-header = "../res/header.html"
-footer = "../res/footer.html"
-links  = "../res/links.json"
-redirect = "../res/redirect.html"
-source = "../source/"
-css    = "../source/css"
-images = "../source/img"
+root     = "../"
+site     = f"{root}site/"
+header   = f"{root}res/header.html"
+footer   = f"{root}res/footer.html"
+links    = f"{root}res/links.json"
+redirect = f"{root}res/redirect.html"
+source   = f"{root}source/"
+css      = f"{root}source/css"
+images   = f"{root}source/img"
 
 title = "DIGEST Storage Research"
 shorttitle = "DIGEST"
@@ -25,7 +26,7 @@ def createFolder(item):
         touch files to bump them up the 'date modified' order
     """
     # touch files to order by 'last modified'
-    target = item[:].replace(source,root)
+    target = item[:].replace(source,site)
     os.system(f'mkdir -p {target}')
     # add default banner
     if not os.path.exists(f'{item}banner.png'):
@@ -39,7 +40,7 @@ def createFolder(item):
 
 def toHTML(item):
     """ process with pandoc or just copy """
-    target = item[:].replace(source,root)
+    target = item[:].replace(source,site)
     if item.endswith('.md'):
         # generate HTML
         os.system(f'pandoc -s {item} -o {target[:-3]}.html')
@@ -73,13 +74,13 @@ def boxContent(url,inner=''):
         - inner is comma spearated: title, author, data, image
     """
     print(url)
-    url = url.split(root)[-1]
+    url = url.split(site)[-1]
     path = ''
     lines = ''
-    if os.path.exists(f"{root}{url}/index.html"):
+    if os.path.exists(f"{site}{url}/index.html"):
         url = f"{url}/index.html"
-    if os.path.exists(f"{root}{url}"):
-        with open(f"{root}{url}") as file:
+    if os.path.exists(f"{site}{url}"):
+        with open(f"{site}{url}") as file:
             lines = file.readlines()
         lines.reverse()
         url = f"${url}"
@@ -184,7 +185,7 @@ def reorderFiles(srcItems):
     """
     for item in srcItems:
         if os.path.isdir(item):
-            target = item[:].replace(source,root)
+            target = item[:].replace(source,site)
             # touch to reorder (if specified)
             if os.path.isfile(f'{item}/order.txt'):
                 with open(f'{item}/order.txt') as file:
@@ -231,7 +232,7 @@ def relativeLinks(item,text):
         $  > absolute path
         ./ > relative path
     """
-    href  = item.split(root)[1]
+    href  = item.split(site)[1]
     sublevel = './'
     if href.count('/') > 0:
         sublevel = "../" * href.count('/')
@@ -299,9 +300,9 @@ def processHTML(item):
             lines[i] = line
         if '</a>%box' in line:
             url = line.split('href="')[-1].split('"')[0]
-            if not url.startswith('http') and not os.path.exists(f"{root}{url}"):
+            if not url.startswith('http') and not os.path.exists(f"{site}{url}"):
                 itemName = item.split('/')[-1]
-                itemPath = item.split(itemName)[0].split(root)[-1]
+                itemPath = item.split(itemName)[0].split(site)[-1]
                 url = f"{itemPath}{url}"
             inner = line.split('</a>')[0].split('>')[-1]
             lines[i] = boxContent(url,inner)
@@ -327,8 +328,8 @@ def shortlinks():
         thisLink = linkMaster[:]
         thisLink = replaceText(thisLink,"$url",f"../{url[key]}")
         thisLink = replaceText(thisLink,"$key",key)
-        os.system(f'mkdir {root}{key}')
-        with open(f'{root}{key}/index.html','w') as file:
+        os.system(f'mkdir {site}{key}')
+        with open(f'{site}{key}/index.html','w') as file:
             file.writelines(thisLink)
 
 ## END FUNCTIONS ##
@@ -352,7 +353,7 @@ with open(footer) as file:
 
 ## MAIN ##
 # clean slate
-os.system(f'rm -rf {root} && mkdir {root}')
+os.system(f'rm -rf {site} && mkdir {site}')
 # process source files
 srcItems = glob.glob(f'{source}**', recursive=True)
 for item in srcItems:
@@ -364,7 +365,7 @@ for item in srcItems:
     toHTML(item)
 
 # switch to public_html
-items = glob.glob(f'{root}**', recursive=True)
+items = glob.glob(f'{site}**', recursive=True)
 items.sort(key=os.path.getmtime)
 for item in items:
     if item.endswith('.html'):
@@ -378,3 +379,7 @@ for item in items:
         processHTML(item)
 
 shortlinks()
+
+# move all files into the site
+os.system(f'cp -r {site}/* {root}')
+os.system(f'rm -rf {site}')
