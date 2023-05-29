@@ -1,20 +1,21 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 import os
 import glob
 import json
+os.system('touch post-update-python.md')
 
-root = "./site/"
-header = "./res/header.html"
-footer = "./res/footer.html"
-links  = "./res/links.json"
-redirect = "./res/redirect.html"
-source = "./source/"
-css    = "./source/css"
-images = "./source/img"
+root = "../site/"
+header = "../res/header.html"
+footer = "../res/footer.html"
+links  = "../res/links.json"
+redirect = "../res/redirect.html"
+source = "../source/"
+css    = "../source/css"
+images = "../source/img"
 
-title = "Energy Demand Observatory & Laboratory"
-shorttitle = "EDOL"
+title = "DIGEST Storage Research"
+shorttitle = "DIGEST"
 
 """ COMMENT """
 
@@ -72,6 +73,7 @@ def boxContent(url,inner=''):
         - url (can be local file or www) and 
         - inner is comma spearated: title, author, data, image
     """
+    print(url)
     url = url.split(root)[-1]
     path = ''
     lines = ''
