@@ -1,4 +1,4 @@
-% DIGEST8
+% DIGEST9
 % Data-driven exploration of the carbon emissions impact of grid energy storage deployment and dispatch
 
 %flex
