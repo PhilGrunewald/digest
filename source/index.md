@@ -1,32 +1,12 @@
-% EDOL
-% Energy Demand Observatory and Laboratory
-
-The Energy Demand Observatory and Laboratory (EDOL) collects and shares energy use data for research.
-
+% DIGEST
+% Data-driven exploration of the carbon emissions impact of grid energy storage deployment and dispatch
 
 %flex
 
 [](News)%box
 
-[](About)%box
+[](Research)%box
 
-[](About/People)%box
-
-%/flex
-
-# Research
-
-%flex
-
-[](Research/Observatory)%box
-
-[](Research/Labs)%box
-
-[](Research/Labs/Heat)%box
+[](People)%box
 
 %/flex
-
-
-
-
-%![Security](https://imgs.xkcd.com/comics/code_talkers.png)%icon

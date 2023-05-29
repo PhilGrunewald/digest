@@ -3,13 +3,9 @@
 
 ![]($img/icons/news.svg)
 
-<div class="flex-container">
 
-[](Press)%box
+Oxford meeting
 
-[](Blog/index.md)%box
+London meeting
 
-</div>
-
-
-[Some of Phil's slides](Slides/slides.php)
+Edinburgh meeting
