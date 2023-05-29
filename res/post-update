@@ -387,4 +387,4 @@ os.system(f'cp -r {site}/* {ROOT}')
 os.system(f'rm -rf {site}')
 
 # update this script - fixed
-os.system(f'ln {ROOT}res/post-update {ROOT}.git/hooks/post-update')
+os.system(f'ln -f {ROOT}res/post-update {ROOT}.git/hooks/post-update')
