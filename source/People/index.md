@@ -1,0 +1,3 @@
+% People
+% The Digest Team
+
