@@ -1,7 +1,7 @@
 % Hyper-Markdown
 % Turns markdown files and folder structure into websites
 
-v6 server side
+v7 server side then local
 
 Summary
 =======
