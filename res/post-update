@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-""" Auto executed on remote push """
+""" Auto executed on remote push - active """
 
 import os
 import glob
