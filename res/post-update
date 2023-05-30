@@ -198,10 +198,11 @@ def reorderFiles(srcItems):
                     # add 1s per line to mod time to move up rank
                     # XXX not WORKING on UBUBTU: -A flag
                     if os.path.exists('/Users/'):
-                        print("I can touch -A")
+                        print("Touch -A")
                         os.system(f"touch -r {dest} -A {i:02} {dest}")
                     else:
-                        print("No touch -A - The oder may be off")
+                        os.system(f"touch -m {dest}")
+                        print("Touch -m - The oder may be off")
 
 
 def getHead(item):
@@ -224,11 +225,12 @@ def getHead(item):
     path = '$'
     for folder in folders:
         path = f"{path}{folder}/"
-        if folder == folders[-1]:
-            head.insert(navInsert,f'<a class="folder-link" href="{path}"><b>{folder}</b></a>\n')
-        else:
-            head.insert(navInsert,f'<a class="folder-link" href="{path}">{folder}</a>\n')
-        navInsert+=1
+        if folder != "":
+            if folder == folders[-1]:
+                head.insert(navInsert,f'<a class="folder-link" href="{path}"><b>{folder}</b></a>\n')
+            else:
+                head.insert(navInsert,f'<a class="folder-link" href="{path}">{folder}</a>\n')
+            navInsert+=1
     head.insert(navInsert,'<br><div class="navPages">')
     navInsert+=1
 
