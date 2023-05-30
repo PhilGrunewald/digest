@@ -1,7 +1,10 @@
-% Hyper-Markdown
+% DIGEST Hyper-Markdown
 % Turns markdown files and folder structure into websites
 
-v10 local
+Author:  Phil Grunewald
+Licence: MIT (see docs)
+Version: v0.1
+Date:    30 May 23
 
 Summary
 =======
@@ -13,7 +16,11 @@ Use
 
 - Clone this repository
 - Edit files in `source/`
-- Run `python build.py`
+- Add, commit, push (only for `res` and `source` folders)
+
+Done!
+
+- Run `python post-update`
 - Servable files end up in `public_html` (this gets rewritten each time, so don't edit files there!)
 - Files other than `.md` get copied as are (e.g. html,js,php,css,png,svg,jpg,pdf)
 - Done
