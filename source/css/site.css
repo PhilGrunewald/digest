@@ -1,38 +1,55 @@
 body {
   /* banner.png is local to page (specified in res/header.html) */
-  line-height: 1.7em;
   font-family: sans-serif;
   background-repeat: no-repeat;
+  background-size: 100%;
+  /*
   background-position: 0rem 7rem;
   background-position-x: left;
+  */
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
 }
 
 .content {
-    display: inline-block;
-    background-color: #eee8;
-    padding:           3rem;
-    margin: 8rem 1rem 3rem 1rem;
-    border-radius:     1rem;
+  display: inline-block;
+  background-color: #eee8;
+  padding:           1rem;
+  margin:            1rem;
+  border-radius:     1rem;
+  padding-bottom:    4rem;
+  margin-top:        2rem;
+  margin-bottom:     4rem;
 }
 
 #title-block-header {
-  padding:       2rem;
-}
-
-h1,h2,em {
   color: darkgreen;
+  margin-bottom:     4rem;
 }
 
-h1,h2 {
+em {
+  color:     darkgreen;
+}
+
+h1 {
   font-size: 32px;
 }
 
+h1,h2,h3,h4,h5,h6 {
+  color:     darkgreen;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+p {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
 a {
-    color: darkgreen;
-    text-decoration:none;
+  color: darkgreen;
+  text-decoration:none;
 }
 
 button {
@@ -59,12 +76,13 @@ button:hover {
  }
 
 .site-title { 
-    font-size: 26px;
-    font-weight: 300;
-    line-height: 54px;
-    letter-spacing: -1px;
-    margin-bottom: 0;
-    float: left;
+  color: darkgreen;
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 54px;
+  letter-spacing: 16px;
+  margin-top: 12px;
+  float: left;
 }
 
 .title {
@@ -82,9 +100,9 @@ button:hover {
     font-style: italic;
 }
 
-.site-title, .site-title:visited { color: #424242; }
+.site-title, .site-title:visited { color: darkgreen; }
 
-.site-nav { float: right; line-height: 27px; }
+.site-nav { float: right; margin: 20px; line-height: 27px; }
 
 .site-nav .nav-trigger { display: none; }
 
@@ -197,12 +215,12 @@ a:link.flex-link {
 
 
 .flex-top {
-    height: 30px;
-    /* background-color: darkgreen; */
-    background: linear-gradient(to top right, lightgreen -20%, darkgreen 160%);
-    border-radius: 10px 10px 0px 0px;
-    margin: -10px;
-    margin-bottom: 15px;
+  height: 10px;
+  /* background-color: darkgreen; */
+  background: linear-gradient(to top right, lightgreen -20%, darkgreen 160%);
+  border-radius: 10px 10px 0px 0px;
+  margin: -10px;
+  margin-bottom: 15px;
 }
 
 .lab {
@@ -221,12 +239,12 @@ a:link.flex-link {
     background: linear-gradient(to top right, #7070ff -20%, #1010ee 160%);
 }
 
-.ECI {
+.Imperial {
     background: linear-gradient(to top right, #70a0ff -20%, #80c0dd 160%);
 }
 
-.UCL {
-    background: linear-gradient(to top right, orange -20%, darkorange 160%);
+.Edinburgh {
+    background: linear-gradient(to top right, gray -20%, darkgray 160%);
 }
 
 .flex-item {
@@ -237,9 +255,10 @@ a:link.flex-link {
   width:           15rem;
 }
 
+/*
 figure {
   display: inline-block;
-  float: right;
+  float:   left;
   max-width: unset;
 }
 
@@ -248,11 +267,21 @@ figcaption {
 }
 
 img {
-    float:         right;
-    margin-left:    3rem;
-    margin-bottom:  3rem;
-    min-width:     10vw;
-    width:        150px;
+  float:         left;
+  margin-left:    3rem;
+  margin-bottom:  3rem;
+  min-width:     10vw;
+  width:        150px;
+}
+*/
+
+figure {
+  max-width: 50vw;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width: 50vw;
 }
 
 img.toggle {
@@ -269,35 +298,30 @@ img.icon {
 }
 
 img.inline {
-    height: 1rem;
-    float: unset;
-    margin: unset;
-    padding: unset;
-    width: unset;
-    min-width: unset;
+  height: 1rem;
+  float: unset;
+  margin: unset;
+  padding: unset;
+  width: unset;
+  min-width: unset;
 }
 
 img.person {
   border-radius: 50%;
   -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
   filter: grayscale(100%);
+  max-width: 200px;
 }
 
 img.big {
- /* float: unset; 
-  border-color: gray;
-  border-width: 3px;
-  border-style: solid;
-  * */
   border-radius: 20px;
-  width: 80vw;
+  width:         100%;
+  max-width:    unset;
   transition: width 0.5s, position 0.5s;
 }
 
-
 img.preview {
-  margin-left: 50%;
-  margin-bottom: unset;
+  margin-left:   10px;
   min-width:     10vw;
   width:        150px;
 }

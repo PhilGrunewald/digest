@@ -7,19 +7,20 @@ import glob
 import json
 
 ROOT     = "../"
-site     = f"{ROOT}site/"
+SITE     = "site/"
+site     = f"{ROOT}{SITE}"
 header   = f"{ROOT}res/header.html"
 footer   = f"{ROOT}res/footer.html"
+config    = f"{ROOT}res/config.json"
 links    = f"{ROOT}res/links.json"
 redirect = f"{ROOT}res/redirect.html"
 source   = f"{ROOT}source/"
 css      = f"{ROOT}source/css"
 images   = f"{ROOT}source/img"
 
-title = "DIGEST Storage Research"
-shorttitle = "DIGEST"
-
-""" COMMENT """
+with open(config) as f:
+    config = json.load(f)
+# title = "DIGEST Storage Research"
 
 
 def createFolder(item):
@@ -122,7 +123,7 @@ def boxContent(url,inner=''):
             if 'class="date"' in line:
                 date = line
                 dateLine = i
-            if ('img src=' in line):
+            if 'img src=' in line:
                 className = ''
                 if ">%" in line:
                     className = line.split('>%')[-1].split('</p>')[0]
@@ -139,10 +140,10 @@ def boxContent(url,inner=''):
                 <a class="flex-link" href="{url}">
                     <div class="flex-top {itemType}"></div>
                         <div class="flex-content">
+                            {image}
                             {title}
                             {author}
                             {date}
-                            {image}
                             <p><i>More ...</i></p>
                         </div>
                     </a>
@@ -199,7 +200,11 @@ def reorderFiles(srcItems):
                         dest = dest.replace('.md','.html')
                     # add 1s per line to mod time to move up rank
                     # XXX not WORKING on UBUBTU: -A flag
-                    ### os.system(f"touch -r {dest} -A {i:02} {dest}")
+                    if os.path.exists('/Users/'):
+                        print("I can touch -A")
+                        os.system(f"touch -r {dest} -A {i:02} {dest}")
+                    else:
+                        print("No touch -A - The oder may be off")
 
 
 def getHead(item):
@@ -210,17 +215,20 @@ def getHead(item):
     # Nav item UP one level
     label = folderPath.split('/')[-2]
     navInsert = navInsertMaster
-    if not label == 'public_html':
-        folders = folderPath.split('public_html')[-1].split('/')[1:-1]
+    if not label == SITE[:-1]:
+        folders = folderPath.split(SITE[:-1])[-1].split('/')[1:-1]
         absFolder = '$'
         for folder in folders:
-            head.insert(navInsert,f'<a class="folder-link" href="{absFolder}"><b>{folder}:</b></a>\n')
-            absFolder = f"{absFolder}{folder}/"
-            navInsert+=1
+            head.insert(navInsert,f'<a class="page-link" href="./">{folder}</a>\n')
+            head.insert(navInsert,f'<a class="folder-link" href="{absFolder}"><b>Back</b></a>\n')
+            navInsert+=2
+    else:
+        head.insert(navInsert,f'<a class="folder-link" href="$"><b>{config["Title"]}</b></a>\n')
+        navInsert+=1
+
     # Nav: all subfolders with index.html get a menu item
     folders = glob.glob(f'{folderPath}**', recursive=False)
     folders.sort(key=os.path.getmtime)
-    # for folder in glob.glob(f'{folderPath}**', recursive=False):
     for folder in reversed(folders):
         if os.path.isdir(folder) and (os.path.exists(f'{folder}/index.html') or os.path.exists(f'{folder}/index.php')):
             label = folder.split('/')[-1]
@@ -321,8 +329,8 @@ def processHTML(item):
 def shortlinks():
     """ add folders with index.html as short link destination """
     # short links
-    with open(links) as file:
-        url = json.load(file)
+    # with open(config) as f:
+    url = config["Links"]
     # template
     with open(redirect) as file:
         linkMaster = file.readlines()
@@ -347,15 +355,34 @@ for i,line in enumerate(globalHead):
     if "navInsert" in line:
         navInsertMaster = i
     if "navTitle" in line:
-        globalHead[i] = line.replace("navTitle",title)
+        globalHead[i] = line.replace("navTitle",config["Title"])
+    if "navDescription" in line:
+        globalHead[i] = line.replace("navDescription",config["Description"])
+    if "navURL" in line:
+        globalHead[i] = line.replace("navURL",config["URL"])
+    if "navLogo" in line:
+        globalHead[i] = line.replace("navLogo",config["Logo"])
 
 with open(footer) as file:
     globalFoot = file.readlines()
+for i,line in enumerate(globalFoot):
+    if "navTitle" in line:
+        globalFoot[i] = line.replace("navTitle",config["Title"])
+    if "navDescription" in line:
+        globalFoot[i] = line.replace("navDescription",config["Description"])
+    if "navURL" in line:
+        globalFoot[i] = line.replace("navURL",config["URL"])
+    if "navLogo" in line:
+        globalFoot[i] = line.replace("navLogo",config["Logo"])
 
 
 ## MAIN ##
-# clean slate
-os.system(f'rm -rf {site} && mkdir {site}')
+# clean slate - delete all except:
+# res, source, .git and README.md
+os.system("find .. -maxdepth 1 -not -name 'res' -not -name 'source' -not -name 'README.md' -not -name '.git' -not -path '..' -exec rm -rf {} +")
+# os.system(f'rm -rf {site} && mkdir {site}')
+os.system(f'mkdir {site}')
+
 # process source files
 srcItems = glob.glob(f'{source}**', recursive=True)
 for item in srcItems:

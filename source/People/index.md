@@ -1,3 +1,3 @@
-% People
-% The Digest Team
+% The Team
 
+![](team.jpg)%big
