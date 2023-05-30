@@ -221,7 +221,6 @@ def getHead(item):
     folderPath = fullPath.split(SITE[:-1])[-1][1:-1]
     # folderPath:  f1/f2
     folders = folderPath.split('/')
-    print(folders)
     path = '$'
     for folder in folders:
         path = f"{path}{folder}/"
