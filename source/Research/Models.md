@@ -1,7 +1,7 @@
 % Models
 % DIGEST advances and links leading national network models
 
-# The Edinburgh medel
+# The Edinburgh model
 
 Edinburgh have developed a high-fidelity 3000 node GB transmission network model integrated with a Balancing Mechanism model and Elexon unit-level data.
 

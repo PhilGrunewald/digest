@@ -20,8 +20,6 @@ images   = f"{ROOT}source/img"
 
 with open(config) as f:
     config = json.load(f)
-# title = "DIGEST Storage Research"
-
 
 def createFolder(item):
     """ create all folders
@@ -76,7 +74,6 @@ def boxContent(url,inner=''):
         - url (can be local file or www) and 
         - inner is comma spearated: title, author, data, image
     """
-    print(url)
     url = url.split(site)[-1]
     path = ''
     lines = ''
@@ -210,30 +207,42 @@ def reorderFiles(srcItems):
 def getHead(item):
     # Links to subfolders in MENU
     head = globalHead[:]
-    fileName = item.split('/')[-1]
-    folderPath = item.split(fileName)[0]
-    # Nav item UP one level
-    label = folderPath.split('/')[-2]
+    # HOME button
     navInsert = navInsertMaster
-    if not label == SITE[:-1]:
-        folders = folderPath.split(SITE[:-1])[-1].split('/')[1:-1]
-        absFolder = '$'
-        for folder in folders:
-            head.insert(navInsert,f'<a class="page-link" href="./">{folder}</a>\n')
-            head.insert(navInsert,f'<a class="folder-link" href="{absFolder}"><b>Back</b></a>\n')
-            navInsert+=2
-    else:
-        head.insert(navInsert,f'<a class="folder-link" href="$"><b>{config["Title"]}</b></a>\n')
+    head.insert(navInsert,f'<a class="folder-link" href="$">{config["Title"]}</a>\n')
+    navInsert+=1
+
+    # PARENT Folders
+    # item:     ..site/f1/f2/page.html
+    fileName = item.split('/')[-1]
+    # filename: page.html
+    fullPath = item.split(fileName)[0]
+    # fullPath: ..site/f1/f2/
+    folderPath = fullPath.split(SITE[:-1])[-1][1:-1]
+    # folderPath:  f1/f2
+    folders = folderPath.split('/')
+    print(folders)
+    path = '$'
+    for folder in folders:
+        path = f"{path}{folder}/"
+        if folder == folders[-1]:
+            head.insert(navInsert,f'<a class="folder-link" href="{path}"><b>{folder}</b></a>\n')
+        else:
+            head.insert(navInsert,f'<a class="folder-link" href="{path}">{folder}</a>\n')
         navInsert+=1
+    head.insert(navInsert,'<br><div class="navPages">')
+    navInsert+=1
 
     # Nav: all subfolders with index.html get a menu item
-    folders = glob.glob(f'{folderPath}**', recursive=False)
+    folders = glob.glob(f'{fullPath}**', recursive=False)
     folders.sort(key=os.path.getmtime)
     for folder in reversed(folders):
         if os.path.isdir(folder) and (os.path.exists(f'{folder}/index.html') or os.path.exists(f'{folder}/index.php')):
             label = folder.split('/')[-1]
             head.insert(navInsert,f'<a class="page-link" href="{label}">{label}</a>\n')
             navInsert+=1
+    head.insert(navInsert,f'</div>')
+
     return head
 
 

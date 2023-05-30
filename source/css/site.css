@@ -100,9 +100,13 @@ button:hover {
     font-style: italic;
 }
 
+.navPages {
+    display: inline-block;
+}
+
 .site-title, .site-title:visited { color: darkgreen; }
 
-.site-nav { float: right; margin: 20px; line-height: 27px; }
+.site-nav { float: right; margin: 10px; line-height: 27px; }
 
 .site-nav .nav-trigger { display: none; }
 
@@ -111,22 +115,23 @@ button:hover {
 .page-link-active { font-weight: 700; margin-left: 20px; }
 
 .site-nav .page-link {
-    margin-left: 5px;
+    margin: 5px;
     background: #d4e5d7a6;
     padding-left: 15px;
     padding-right: 15px;
-    margin-right: 5px;
     padding-top: 5px;
     border-radius: 3px;
+    float: right;
 }
 
 .site-nav .folder-link {
-    background: #a9c9a9;
-    padding-top:   5px;
-    margin-right: -2px;
-    padding-right: 5px;
-    padding-left:  5px;
-    border-radius: 3px;
+  margin: 5px;
+  background: #a9c9a9;
+  padding-top:   5px;
+  padding-right: 5px;
+  padding-left:  5px;
+  border-radius: 3px;
+  float: right;
 }
 
 @media screen and (max-width: 600px) { 
@@ -255,31 +260,12 @@ a:link.flex-link {
   width:           15rem;
 }
 
-/*
-figure {
-  display: inline-block;
-  float:   left;
-  max-width: unset;
-}
-
-figcaption {
-  max-width: 80%;
-}
-
-img {
-  float:         left;
-  margin-left:    3rem;
-  margin-bottom:  3rem;
-  min-width:     10vw;
-  width:        150px;
-}
-*/
-
 figure {
   max-width: 50vw;
   margin-left: auto;
   margin-right: auto;
 }
+
 img {
   max-width: 50vw;
 }
