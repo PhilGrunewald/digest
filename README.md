@@ -9,12 +9,14 @@ Date:    30 May 23
 Summary
 =======
 
-A python script using [pandoc](https://pandoc.org/) to convert markdown to html. Folder structure becomes menu structure.
+Project repository for website and file sharing.
 
 Use
 ---
 
 - Clone this repository
+git clone digest@energy-use.org:/var/www/energy-use.org/public_html/digest/.git
+
 - Edit files in `source/`
 - Add, commit, push (only for `res` and `source` folders)
 
