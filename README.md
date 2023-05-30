@@ -3,7 +3,7 @@
 
 Author:  Phil Grunewald
 Licence: MIT (see docs)
-Version: v0.1
+Version: v0.2
 Date:    30 May 23
 
 Summary
