@@ -201,8 +201,10 @@ def reorderFiles(srcItems):
                         print("Touch -A")
                         os.system(f"touch -r {dest} -A {i:02} {dest}")
                     else:
-                        os.system(f"touch -m {dest}")
-                        print("Touch -m - The oder may be off")
+                        # os.system(f"touch -m {dest}")
+                        # print("Touch -m - The oder may be off")
+                        print("Touch -t - The oder may be off")
+                        os.system(f"touch -t '123111{i:02}' {dest}")
 
 
 def getHead(item):

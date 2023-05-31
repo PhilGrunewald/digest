@@ -16,11 +16,12 @@ Use
 
 - Clone this repository
 git clone digest@energy-use.org:/var/www/energy-use.org/public_html/digest/.git
-
 - Edit files in `source/`
 - Add, commit, push (only for `res` and `source` folders)
 
-Done!
+Done! The website is automatically updated.
+
+[Digest](https://energy-use.org/digest/)
 
 - Run `python post-update`
 - Servable files end up in `public_html` (this gets rewritten each time, so don't edit files there!)
