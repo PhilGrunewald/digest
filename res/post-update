@@ -342,13 +342,16 @@ def shortlinks():
     """ add folders with index.html as short link destination """
     # short links
     # with open(config) as f:
-    url = config["Links"]
+    links = config["Links"]
     # template
     with open(redirect) as file:
         linkMaster = file.readlines()
-    for key in url:
+    for key in links:
+        target = links[key]
+        if target.endswith('.md'):
+            target = target.replace('.md','.html')
         thisLink = linkMaster[:]
-        thisLink = replaceText(thisLink,"$url",f"../{url[key]}")
+        thisLink = replaceText(thisLink,"$url",f"../{target}")
         thisLink = replaceText(thisLink,"$key",key)
         os.system(f'mkdir {site}{key}')
         with open(f'{site}{key}/index.html','w') as file:
