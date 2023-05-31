@@ -14,8 +14,13 @@ Project repository for website and file sharing.
 Use
 ---
 
+### Option 1:
+
 - Clone this repository
-git clone digest@energy-use.org:/var/www/energy-use.org/public_html/digest/.git
+- Checkout the `source` branch
+
+```git add remtote digest digest@energy-use.org:/var/www/energy-use.org/public_html/digest/.git```
+
 - Edit files in `source/`
 - Add, commit, push (only for `res` and `source` folders)
 
@@ -23,10 +28,19 @@ Done! The website is automatically updated.
 
 The site is available at [Digest](https://energy-use.org/digest/)
 
+### Option 2:
+
+- Clone this repository
+- Stay on branch site
+- Edit files in `source/`
 - Run `python post-update`
-- Servable files end up in `public_html` (this gets rewritten each time, so don't edit files there!)
+- Add, commit, push origin
+
+The site is available on [github.io](https://philgrunewald.github.io/digest/People/)
+
+- Servable files end up in repo root folder (this gets rewritten each time, so don't edit files there!)
 - Files other than `.md` get copied as are (e.g. html,js,php,css,png,svg,jpg,pdf)
-- Done
+
 
 Conventions
 -----------
@@ -61,15 +75,18 @@ this image is used instead
 Cross-referencing
 -----------------
 
-The _\$_ symbol acts are the root of the site (i.e. `public_html`). To link `source/Folder1/text1.md` use
+The _\$_ symbol acts are the root of the site. To link `source/Folder1/text1.md` use
 
 ```markdown
-  [Text 1]($Folder1/text1.html)
+  [Text 1]($Folder1/text1.md)
 ```
 
-as the url. Relative links work as normal.
+as the url from any sub-folder. Relative links work as normal. (Note that the target file ends
 
-Short links can be declared in `res/redirect.json`:
+Short links
+-----------
+
+Short links can be declared in `res/config.json` under `Links`:
 
 ```json
 {
@@ -88,17 +105,13 @@ Customisations
 
 ### Custom classes
 
-Classes can be added to links and images:
+Classes can be added to links and images with a trailing `%`:
 
 ```markdown
    ![Image caption]($img/navajo.png)%big
 ```
 
-```css
-img.big {
-  width: 100%;
-}
-```
+Style classes are declared in `source/css/site.css` and can be modified to suit.
 
 ### Boxes
 
