@@ -19,7 +19,7 @@ Use
 - Clone this repository
 - Checkout the `source` branch
 
-```git add remtote digest digest@energy-use.org:/var/www/energy-use.org/public_html/digest/.git```
+```git add remote digest digest@energy-use.org:/var/www/energy-use.org/public_html/digest/.git```
 
 - Edit files in `source/`
 - Add, commit, push (only for `res` and `source` folders)
@@ -36,7 +36,7 @@ The site is available at [Digest](https://energy-use.org/digest/)
 - Run `python post-update`
 - Add, commit, push origin
 
-The site is available on [github.io](https://philgrunewald.github.io/digest/People/)
+The site is available on [github.io](https://philgrunewald.github.io/digest)
 
 - Servable files end up in repo root folder (this gets rewritten each time, so don't edit files there!)
 - Files other than `.md` get copied as are (e.g. html,js,php,css,png,svg,jpg,pdf)
