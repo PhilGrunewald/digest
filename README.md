@@ -5,7 +5,7 @@ Author:  Phil Grunewald
 Licence: MIT (see docs)
 Version: v0.2
 Date:    30 May 23
-phone update
+
 Summary
 =======
 
@@ -14,33 +14,19 @@ Project repository for website and file sharing.
 Use
 ---
 
-### Option 1:
-
-- Clone this repository
-- Checkout the `source` branch
-
-```git add remote digest digest@energy-use.org:/var/www/energy-use.org/public_html/digest/.git```
-
-- Edit files in `source/`
-- Add, commit, push (only for `res` and `source` folders)
+- Clone this repository ```git clone digest@energy-use.org:/var/www/energy-use.org/public_html/digest/.git```
+- Edit files in `_src`
+- Add, commit, push
 
 Done! The website is automatically updated.
 
 The site is available at [Digest](https://energy-use.org/digest/)
 
-### Option 2:
+### Local development
 
-- Clone this repository
-- Stay on branch site
-- Edit files in `source/`
-- Run `python post-update`
-- Add, commit, push origin
+run `python _res/post-update` to generate the site locally.
 
-The site is available on [github.io](https://philgrunewald.github.io/digest)
-
-- Servable files end up in repo root folder (this gets rewritten each time, so don't edit files there!)
-- Files other than `.md` get copied as are (e.g. html,js,php,css,png,svg,jpg,pdf)
-
+NOTE: do not add the generated folder to the repo. It is automatically generated remotely.
 
 Conventions
 -----------
@@ -82,10 +68,17 @@ The _\$_ symbol acts are the root of the site. To link `source/Folder1/text1.md`
 ```
 
 as the url from any sub-folder. Relative links work as normal. (Note that the target file ends
+<<<<<<< HEAD
 
 Short links
 -----------
 
+=======
+
+Short links
+-----------
+
+>>>>>>> site
 Short links can be declared in `res/config.json` under `Links`:
 
 ```json

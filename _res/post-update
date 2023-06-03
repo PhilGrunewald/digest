@@ -7,31 +7,33 @@ import glob
 import json
 
 ROOT     = "../"
-SITE     = "site/"
-site     = f"{ROOT}{SITE}"
-header   = f"{ROOT}res/header.html"
-footer   = f"{ROOT}res/footer.html"
-config    = f"{ROOT}res/config.json"
-links    = f"{ROOT}res/links.json"
-redirect = f"{ROOT}res/redirect.html"
-source   = f"{ROOT}source/"
-css      = f"{ROOT}source/css"
-images   = f"{ROOT}source/img"
+site     = f"{ROOT}site/"
+src      = f"{ROOT}_src/"
+res      = f"{ROOT}_res/"
+header   = f"{res}header.html"
+footer   = f"{res}footer.html"
+config   = f"{res}config.json"
+links    = f"{res}links.json"
+redirect = f"{res}redirect.html"
+css      = f"{src}css"
+images   = f"{src}img"
+
 
 with open(config) as f:
     config = json.load(f)
+banner = config['Banner']
 
 def createFolder(item):
     """ create all folders
-        populate all folders with a banner.png
+        populate all folders with a banner
         touch files to bump them up the 'date modified' order
     """
     # touch files to order by 'last modified'
-    target = item[:].replace(source,site)
+    target = item[:].replace(src,site)
     os.system(f'mkdir -p {target}')
     # add default banner
-    if not os.path.exists(f'{item}banner.png'):
-        os.system(f'cp {source}img/banner.png {target}')
+    if not os.path.exists(f'{item}{banner}'):
+        os.system(f'cp {src}img/{banner} {target}')
     # touch to reorder (if specified)
     if os.path.isfile(f'{item}/order.txt'):
         with open(f'{item}/order.txt') as file:
@@ -41,7 +43,7 @@ def createFolder(item):
 
 def toHTML(item):
     """ process with pandoc or just copy """
-    target = item[:].replace(source,site)
+    target = item[:].replace(src,site)
     if item.endswith('.md'):
         # generate HTML
         os.system(f'pandoc -s {item} -o {target[:-3]}.html')
@@ -185,7 +187,7 @@ def reorderFiles(srcItems):
     """
     for item in srcItems:
         if os.path.isdir(item):
-            target = item[:].replace(source,site)
+            target = item[:].replace(src,site)
             # touch to reorder (if specified)
             if os.path.isfile(f'{item}/order.txt'):
                 with open(f'{item}/order.txt') as file:
@@ -196,14 +198,10 @@ def reorderFiles(srcItems):
                         dest = f'{target}/{file}'.split('\n')[0]
                         dest = dest.replace('.md','.html')
                     # add 1s per line to mod time to move up rank
-                    # XXX not WORKING on UBUBTU: -A flag
                     if os.path.exists('/Users/'):
-                        print("Touch -A")
                         os.system(f"touch -r {dest} -A {i:02} {dest}")
                     else:
-                        # os.system(f"touch -m {dest}")
-                        # print("Touch -m - The oder may be off")
-                        print("Touch -t - The oder may be off")
+                        # ubuntu is different
                         os.system(f"touch -t '123111{i:02}' {dest}")
 
 
@@ -221,7 +219,7 @@ def getHead(item):
     # filename: page.html
     fullPath = item.split(fileName)[0]
     # fullPath: ..site/f1/f2/
-    folderPath = fullPath.split(SITE[:-1])[-1][1:-1]
+    folderPath = fullPath.split(site[:-1])[-1][1:-1]
     # folderPath:  f1/f2
     folders = folderPath.split('/')
     path = '$'
@@ -298,8 +296,8 @@ def processHTML(item):
                 css = css.split("</p>")[0].strip()
                 head.insert(cssInsert,f'  <link rel="stylesheet" href="./css/{css}">\n')
             if "banner:" in line:
-                banner = line.split("banner:")[-1].split("</p>")[0].strip()
-                head = replaceText(head,"url('banner.png')",f"url('{banner}')")
+                local_banner = line.split("banner:")[-1].split("</p>")[0].strip()
+                head = replaceText(head,f"url({banner})",f"url('{local_banner}')")
             # replace line
             if "<p>%flex" in line:
                 lines[i] = '<div class="flex-container">\n'
@@ -373,6 +371,8 @@ for i,line in enumerate(globalHead):
         globalHead[i] = line.replace("navTitle",config["Title"])
     if "navDescription" in line:
         globalHead[i] = line.replace("navDescription",config["Description"])
+    if "navBanner" in line:
+        globalHead[i] = line.replace("navBanner",config["Banner"])
     if "navURL" in line:
         globalHead[i] = line.replace("navURL",config["URL"])
     if "navLogo" in line:
@@ -393,13 +393,16 @@ for i,line in enumerate(globalFoot):
 
 ## MAIN ##
 # clean slate - delete all except:
-# res, source, .git and README.md
-os.system("find .. -maxdepth 1 -not -name 'res' -not -name 'source' -not -name 'README.md' -not -name '.git' -not -path '..' -exec rm -rf {} +")
-# os.system(f'rm -rf {site} && mkdir {site}')
-os.system(f'mkdir {site}')
+# res, src, .git and README.md
+# os.system("find .. -maxdepth 1 -not -name '_res' -not -name '_src' -not -name 'README.md' -not -name '.git' -not -path '..' -exec rm -rf {} +")
+os.system(f'rm -rf {site} && mkdir {site}')
+# os.system(f'mkdir {site}')
 
 # process source files
-srcItems = glob.glob(f'{source}**', recursive=True)
+# srcItems = glob.glob(f'{src}**', recursive=True)
+srcItems = [fn for fn in glob.glob(f'{src}**', recursive=True) 
+         if not os.path.basename(fn).startswith('_')]
+
 for item in srcItems:
     if os.path.isdir(item):
         createFolder(item)
@@ -418,15 +421,12 @@ reorderFiles(srcItems)
 
 for item in items:
     if item.endswith('.html'):
-        # cleanHTML(item)
         addBoxes(item)
         processHTML(item)
 
 shortlinks()
 
-# move all files into the site
-os.system(f'cp -r {site}/* {ROOT}')
-os.system(f'rm -rf {site}')
 
 # update this script - fixed
-os.system(f'ln -f {ROOT}res/post-update {ROOT}.git/hooks/post-update')
+os.system(f'ln -f {res}post-update {ROOT}.git/hooks/post-update')
+print("post-update complete")
