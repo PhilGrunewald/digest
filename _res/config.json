@@ -3,7 +3,6 @@
   "Description": "Data-driven exploration of the carbon emissions impact of grid energy storage deployment and dispatch",
   "public_html": "site",
   "URL": "https://energy-use.org/digest",
-  "noLogo": "./img/logo.svg",
   "Banner": "blue.svg",
   "Links": {
     "Lit":  "Bib/literature.html",
