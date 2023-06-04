@@ -371,15 +371,12 @@ for i,line in enumerate(globalHead):
     if "navInsert" in line:
         navInsertMaster = i
     if "navTitle" in line:
-        if "Logo" in config:
-            globalHead[i] = ""
-        else:
-            globalHead[i] = line.replace("navTitle",config["Title"])
+        globalHead[i] = line.replace("navTitle",config["Title"])
     if "navLogo" in line:
         if "Logo" in config:
             globalHead[i] = line.replace("navLogo",config["Logo"])
         else:
-            globalHead[i] = ""
+            globalHead[i] = "\n"
     if "navDescription" in line:
         globalHead[i] = line.replace("navDescription",config["Description"])
     if "navBanner" in line:
@@ -400,7 +397,7 @@ for i,line in enumerate(globalFoot):
         if "Logo" in config:
             globalFoot[i] = line.replace("navLogo",config["Logo"])
         else:
-            globalFoot[i] = ""
+            globalFoot[i] = "\n"
 
 
 ## MAIN ##
