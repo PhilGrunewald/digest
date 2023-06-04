@@ -397,7 +397,10 @@ for i,line in enumerate(globalFoot):
     if "navURL" in line:
         globalFoot[i] = line.replace("navURL",config["URL"])
     if "navLogo" in line:
-        globalFoot[i] = line.replace("navLogo",config["Logo"])
+        if "Logo" in config:
+            globalFoot[i] = line.replace("navLogo",config["Logo"])
+        else:
+            globalFoot[i] = ""
 
 
 ## MAIN ##
