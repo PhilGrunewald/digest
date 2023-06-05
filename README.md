@@ -45,6 +45,13 @@ Conventions
 - Everything is ordered by `date modified` (unless specified in `order.txt` within a folder)
 - Files other than `.md` get copied as are (e.g. html,js,php,css,png,svg,jpg,jpeg,pdf)
 
+Config
+------
+
+The `_res/config.json` file contains the following settings:
+
+`Logo`: if a logo is specified, this is used instead of the `Title` in the top left corner of each page
+
 Styling
 -------
 
